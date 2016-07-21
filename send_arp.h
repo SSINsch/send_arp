@@ -19,10 +19,12 @@
 
 
 int pcd_init(pcap_t **pcd, char **dev);
-void getMyIpMac(struct ether_addr myMac, struct in_addr myIp);
-void getGWIp(struct in_addr GWIp);
-void ARPrequest_reply(struct ether_addr targetMac,	struct in_addr targetIp,
-					struct ether_addr senderMac,	struct in_addr senderIp,	pcap_t *pcd,	int option);
-
+void getMyIpMac(struct ether_addr *myMac, struct in_addr *myIp);
+void getGWIp(struct in_addr *GWIp);
+void ARPreply(struct ether_addr targetMac,	struct in_addr targetIp,
+			struct ether_addr fakeMac,	struct in_addr fakeIp,	pcap_t *pcd);
+void ARPrequest(struct in_addr targetIp, struct ether_addr senderMac,	struct in_addr senderIp,	pcap_t *pcd);
 void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet);
-int pcapCapture(struct in_addr* Ip);
+//int pcapCapture(struct in_addr* Ip);
+int pcapCapture(struct in_addr* Ip, char* device, pcap_t *pcd, const u_char* packet);
+void getVictimMac(u_char *Ipaddress, const struct pcap_pkthdr *pkthdr, const u_char *packet, int* pflag);

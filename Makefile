@@ -9,3 +9,4 @@ pcap.o: send_arp.h pcap.c
 
 clean:
 	rm -f *.o send_arp
+	rm -f *.txt
