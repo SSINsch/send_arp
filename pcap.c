@@ -3,47 +3,6 @@
 int count;
 
 int pcapCapture(struct in_addr* Ip, char* device, pcap_t *pcd, const u_char* packet){
-	/*
-	char 			*device;					// device name
-	char 			errorbuffer[ERRBUF_SIZE];	// Error string
-	bpf_u_int32		mask = 0;					// mask information
-	bpf_u_int32		net = 0;					// IP information
-	pcap_t 			*pcd;					// packet descriptor
-	struct in_addr	net_addr;				// address of ip
-	struct in_addr	mask_addr;				// address of mask
-	const u_char *packet;					// packet
-
-	// find the device
-	device = pcap_lookupdev(errorbuffer);
-	if (device == NULL) {
-		printf("No devices: %s\n", errorbuffer);
-		return 0;
-	}
-	else
-		printf("device: %s\n", device);
-
-    // convert the information to look good 
-	net_addr.s_addr = net;
-	 if(inet_ntoa(net_addr) == NULL) {
-        printf("Cannot convert >> net_addr");
-        return 0;
-	}
-	printf("NET : %s\n", inet_ntoa(net_addr));
-	mask_addr.s_addr = mask;
-	printf("MSK : %s\n", inet_ntoa(mask_addr));
-	printf("--------------------------------\n");
-
-	// get device information
-	if(pcap_lookupnet(device, &net, &mask, errorbuffer) == -1)
-		printf("Cannot get information of devce %s: %s\n", device, errorbuffer);
-
-	// open the device
-	pcd = pcap_open_live(device, PACKET_MAX_BYTES, PROMISCUOUS_MODE, WAIT_MAX_TIME, errorbuffer);
-	if(pcd == NULL){
-		printf("Cannot open device %s: %s\n", device, errorbuffer);
-		return 0;
-	}
-*/
 	// get the packet
 	int res = 0;
 	int flag = 0;
@@ -55,7 +14,6 @@ int pcapCapture(struct in_addr* Ip, char* device, pcap_t *pcd, const u_char* pac
         if(flag == 1) break;
     }
 
-	//pcap_loop(pcd, 0, callback, ((u_char *)&Ip->s_addr));
 	return 1;
 }
 
