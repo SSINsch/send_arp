@@ -13,7 +13,6 @@ int pcapCapture(struct in_addr* Ip, char* device, pcap_t *pcd, const u_char* pac
         getVictimMac(((u_char *)&Ip->s_addr), pkthdr, packet, pflag);
         if(flag == 1) break;
     }
-
 	return 1;
 }
 
@@ -48,42 +47,6 @@ void getVictimMac(u_char *Ipaddress, const struct pcap_pkthdr *pkthdr, const u_c
             printf("Source MAC      : %02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_shost[0], eth->ether_shost[1], eth->ether_shost[2], eth->ether_shost[3], eth->ether_shost[4], eth->ether_shost[5]);
             fprintf(fp, "%02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_shost[0], eth->ether_shost[1], eth->ether_shost[2], eth->ether_shost[3], eth->ether_shost[4], eth->ether_shost[5]);
             *pflag = 1;
-            //printf("Desitnation MAC : %02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_dhost[0], eth->ether_dhost[1], eth->ether_dhost[2], eth->ether_dhost[3], eth->ether_dhost[4], eth->ether_dhost[5]);
-            fclose(fp);
-            return;
-        }
-    }
-    printf("\n\n");
-    fclose(fp);
-}
-
-void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet) {
-	// useless: struct in_addr* Ip
-    // get ehternet header 
-    struct ether_header *eth;   // ethernet header struct
-    struct ether_arp *arph;     // arp header struct
-    eth = (struct ether_header *)packet;
-    FILE *fp = fopen("targetmac.txt", "a+");
-
-    // get ARP header   
-    packet = packet + sizeof(struct ether_header);
-
-    printf("=============== %04d ===============\n", count);
-    count++;
-    // if arp
-    if(ntohs(eth->ether_type) == ETHERTYPE_ARP){
-    	arph = (struct ether_arp *) packet;
-        
-        printf("\nsource: ");
-        for(int i = 0; i<4; i++){
-        	printf("%d ", arph->arp_spa[i]);
-        }	
-        printf("\n");
-
-        if(strncmp(arph->arp_spa, useless, 4) == 0){
-            printf("Source MAC      : %02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_shost[0], eth->ether_shost[1], eth->ether_shost[2], eth->ether_shost[3], eth->ether_shost[4], eth->ether_shost[5]);
-            fprintf(fp, "%02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_shost[0], eth->ether_shost[1], eth->ether_shost[2], eth->ether_shost[3], eth->ether_shost[4], eth->ether_shost[5]);
-            //printf("Desitnation MAC : %02X:%02X:%02X:%02X:%02X:%02X\n", eth->ether_dhost[0], eth->ether_dhost[1], eth->ether_dhost[2], eth->ether_dhost[3], eth->ether_dhost[4], eth->ether_dhost[5]);
             fclose(fp);
             return;
         }

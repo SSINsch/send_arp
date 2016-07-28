@@ -1,3 +1,5 @@
+all: send_arp
+
 send_arp: send_arp.o pcap.o
 	gcc -g -o send_arp send_arp.o pcap.o -lpcap
         
